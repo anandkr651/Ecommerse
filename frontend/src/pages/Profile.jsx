@@ -64,18 +64,20 @@ function Profile() {
     }
   };
   return (
-    <div className="px-3">
+    <div className="px-3 ">
+      <div className="flex flex-col justify-center items-center">
       < div className="w-20 h-20 rounded-full overflow-hidden flex items-center justify-center relative ">
         <img
           src={user.avatar || DummyAvatar}
           alt={user.name}
           className="w-full h-full "
-        />
+          />
        <IoCameraReverse size={23} className="absolute bottom-1 right-2 hover:text cursor-pointer " onClick={() => setOpenProfileAvatar(true)}/>
       </div>
       {openProfileAvatar && (
         <UserProfileAvatarEdit close={() => setOpenProfileAvatar(false)} />
-        )}
+      )}
+      </div>
 
       {/**name, mobile , email, change password */}
       <form className="my-4 grid gap-4" onSubmit={handleSubmit}>
