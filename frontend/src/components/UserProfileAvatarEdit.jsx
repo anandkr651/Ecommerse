@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { FaRegUserCircle } from "react-icons/fa";
 import { useSelector, useDispatch } from "react-redux";
 import Axios from "../utils/Axios";
 import SummaryApi from "../common/SummaryApi";
@@ -9,7 +8,8 @@ import { updatedAvatar } from "../store/userSlice";
 import { IoClose } from "react-icons/io5";
 import DummyAvatar from "../assets/man.png";
 
-function UserProfileAvatarEdit({ close }) {  // close yaha par profile.jsx se aaya hai
+function UserProfileAvatarEdit({ close }) {
+  // close yaha par profile.jsx se aaya hai
   const user = useSelector((state) => state.user);
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(false);
@@ -31,7 +31,7 @@ function UserProfileAvatarEdit({ close }) {  // close yaha par profile.jsx se aa
         ...SummaryApi.uploadAvatar,
         data: formData,
       });
-      console.log(response);
+      // console.log(response);
       toast.success(response.data.message);
       // window.location.reload()
       const { data: responseData } = response;

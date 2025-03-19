@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import logo from "../assets/logo.png";
 import { Link, useLocation } from "react-router-dom";
 import Search from "./Search";
-import DummyAvatar from "../assets/man.png"
+import DummyAvatar from "../assets/man.png";
 import useMobile from "../hooks/useMobile";
 import { GiShoppingCart } from "react-icons/gi";
 import { useSelector } from "react-redux";
@@ -57,14 +57,29 @@ function Header() {
 
   return (
     <div>
-      <header className="h-24 md:h-20 md:shadow-md sticky top-0 z-40 flex flex-col justify-center gap-1 bg-white">
+      <header className="h-24 md:h-20 md:shadow-md fixed top-0 z-40 flex flex-col justify-center gap-1 bg-white w-full">
         {!(isSearchPage && isMobile) && (
           <div className="container mx-auto flex items-center justify-between">
             {/**logo */}
             <div className="h-full">
-              <Link to={"/"} className="h-full flex justify-center items-center">
-                <img src={logo} width={170} height={60} alt="logo" className="hidden md:block" />
-                <img src={logo} width={120} height={60} alt="logo" className="md:hidden" />
+              <Link
+                to={"/"}
+                className="h-full flex justify-center items-center"
+              >
+                <img
+                  src={logo}
+                  width={170}
+                  height={60}
+                  alt="logo"
+                  className="hidden md:block"
+                />
+                <img
+                  src={logo}
+                  width={120}
+                  height={60}
+                  alt="logo"
+                  className="md:hidden"
+                />
               </Link>
             </div>
 
@@ -76,17 +91,31 @@ function Header() {
             {/* add to cart and login */}
             {/* mobile version */}
             <div className="">
-              <button className="md:hidden block pr-5" onClick={handleMobileUser} >
-                <img src={user.avatar || DummyAvatar} alt="" className="h-8 w-8 rounded-full"/>
+              <button
+                className="md:hidden block pr-5"
+                onClick={handleMobileUser}
+              >
+                <img
+                  src={user.avatar || DummyAvatar}
+                  alt=""
+                  className="h-8 w-8 rounded-full"
+                />
               </button>
 
               {/* desktop */}
               <div className="hidden md:flex items-center justify-center gap-4 cursor-pointer">
                 {user?._id ? (
                   <div className="relative ">
-                    <div className="flex items-center gap-2" onClick={() => setOpenUserMenu((prev) => !prev)}>
+                    <div
+                      className="flex items-center gap-2"
+                      onClick={() => setOpenUserMenu((prev) => !prev)}
+                    >
                       <p>Account</p>
-                      {openUserMenu ? (<GoTriangleUp size={25} />) : (<GoTriangleDown size={25} />)}
+                      {openUserMenu ? (
+                        <GoTriangleUp size={25} />
+                      ) : (
+                        <GoTriangleDown size={25} />
+                      )}
                     </div>
                     {openUserMenu && (
                       <div className="absolute right-0 top-12 ">

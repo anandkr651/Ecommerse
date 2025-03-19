@@ -8,8 +8,10 @@ import { logout } from "../store/userSlice.js";
 import toast from "react-hot-toast";
 import AxiosToastError from "../utils/AxiosToastError";
 import { FaExternalLinkAlt } from "react-icons/fa";
+import isAdmin from "../utils/IsAdmin.jsx";
 
-function UserMenu({ close }) { //close props header se aa raha hai
+function UserMenu({ close }) {
+  //close props header se aa raha hai
   const user = useSelector((state) => state.user);
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -42,16 +44,48 @@ function UserMenu({ close }) { //close props header se aa raha hai
   return (
     <div className="px-2 py-3">
       <div className="font-semibold "> My Account </div>
-      <div className="text-sm capitalize italic font-normal flex justify-between items-center">
-        Hello {user.name}{" "}
+      <div className="text-sm capitalize italic font-normal flex">
+        Hello {user.name} ji <span className="uppercase text-red-500 font-medium px-1">({user.role})</span>
         <Link onClick={handleClose} to={"/dashboard/profile"} className="hover:text-orange-400">
           <FaExternalLinkAlt />
         </Link>{" "}
       </div>
       <Divider />
       <div className="flex flex-col text-center gap-2">
-        <Link onClick={handleClose} to={"/dashboard/myOrder"} className="bg-orange-300 rounded-md hover:bg-orange-400" >
-          My Orders{" "}
+
+        {
+          isAdmin(user.role) &&(
+            <Link onClick={handleClose} to={"/dashboard/category"} className="bg-orange-300 rounded-md hover:bg-orange-400">
+              Category
+            </Link>
+          )
+        }
+
+        {
+          isAdmin(user.role) &&(
+            <Link onClick={handleClose} to={"/dashboard/subCategory"} className="bg-orange-300 rounded-md hover:bg-orange-400">
+              Sub Category
+            </Link>
+          )
+        }
+
+        {
+          isAdmin(user.role) &&(
+            <Link onClick={handleClose} to={"/dashboard/uploadProduct"} className="bg-orange-300 rounded-md hover:bg-orange-400">
+              Upload Product
+            </Link>
+          )
+        }
+
+        {
+          isAdmin(user.role) &&(
+            <Link onClick={handleClose} to={"/dashboard/product"} className="bg-orange-300 rounded-md hover:bg-orange-400">
+              Product
+            </Link>
+          )
+        }
+        <Link onClick={handleClose} to={"/dashboard/myOrder"} className="bg-orange-300 rounded-md hover:bg-orange-400">
+          My Orders
         </Link>
         <Link onClick={handleClose} to={"/dashboard/address"} className="bg-orange-300 rounded-md hover:bg-orange-400">
           Save Address

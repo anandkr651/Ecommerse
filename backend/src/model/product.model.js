@@ -45,12 +45,18 @@ const productSchema = new mongoose.Schema(
             default: {},
         },
         publish: {
-            types: Boolean,
+            type: Boolean,
             default: true,
         },
     },
     {
         timestamps: true,
     }
+);
+
+// create index
+productSchema.index(
+    { name: "text", description: "text" },
+    { name: 10, description: 5 }
 );
 export const Product = mongoose.model("Product", productSchema);
