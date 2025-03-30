@@ -45,7 +45,7 @@ const LoginPage = () => {
         localStorage.setItem("accessToken", response.data.data.accessToken);
         localStorage.setItem("refreshToken", response.data.data.refreshToken);
 
-        const userDetails = await fetchUserDetails();
+        const userDetails = await fetchUserDetails(); //utils/fetchUserDetails
         dispatch(setUserDetails(userDetails.data.data));
         // console.log(userDetails);
 
