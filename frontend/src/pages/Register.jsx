@@ -20,7 +20,6 @@ const Register = () => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-
     setData((preve) => {
       return {
         ...preve,
@@ -33,12 +32,10 @@ const Register = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     if (data.password !== data.confirmPassword) {
       toast.error("password and confirm password must be same");
       return;
     }
-
     try {
       const response = await Axios({
         ...SummaryApi.register,
@@ -65,10 +62,10 @@ const Register = () => {
     }
   };
   return (
-    <section className="w-full container mx-auto px-2 lg:pt-20 pt-24">
+    <section className="w-full container mx-auto px-2">
       <div className="bg-white my-4 w-full max-w-lg mx-auto rounded p-7">
         <p>Welcome to Binkeyit</p>
-
+        {/* form started */}
         <form className="grid gap-4 mt-6" onSubmit={handleSubmit}>
           <div className="grid gap-1">
             <label htmlFor="name">Name :</label>
@@ -139,12 +136,7 @@ const Register = () => {
 
           <button
             disabled={!valideValue}
-            className={` ${
-              valideValue
-                ? "bg-green-800 hover:bg-green-700"
-                : "bg-gray-500 cursor-not-allowed"
-            }    text-white py-2 rounded font-semibold my-3 tracking-wide`}
-          >
+            className={` ${valideValue ? "bg-green-800 hover:bg-green-700":"bg-gray-500 cursor-not-allowed"}    text-white py-2 rounded font-semibold my-3 tracking-wide`}>
             Register
           </button>
         </form>
