@@ -13,7 +13,6 @@ const ForgotPassword = () => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-
     setData((preve) => {
       return {
         ...preve,
@@ -26,21 +25,15 @@ const ForgotPassword = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     try {
       const response = await Axios({
         ...SummaryApi.forgotPassword,
         data: data,
       });
-
-      if (response.data.error) {
-        toast.error(response.data.message);
-      }
-
-      if (response.data.success) {
+      if (response.data.success){
         toast.success(response.data.message);
         navigate("/verifyForgotPasswordOtp", {
-          state: data,                             //yaha se location mi email ja raha hai
+          state: data, //yaha se location mi email ja raha hai
         });
         setData({
           email: "",
@@ -52,7 +45,7 @@ const ForgotPassword = () => {
   };
 
   return (
-    <section className="w-full container mx-auto px-2 lg:pt-20 pt-24">
+    <section className="w-full container mx-auto px-2">
       <div className="bg-white my-4 w-full max-w-lg mx-auto rounded p-7">
         <p className="font-semibold text-lg">Forgot Password </p>
         <form className="grid gap-4 py-4" onSubmit={handleSubmit}>
@@ -75,8 +68,10 @@ const ForgotPassword = () => {
           </button>
         </form>
 
-        <p>Already have account?{" "}
-          <Link to={"/login"} className="font-semibold text-green-700 hover:text-green-800">
+        <p>Already have account?{" "} 
+          <Link 
+            to={"/login"} // go to the pages/loginPage
+            className="font-semibold text-green-700 hover:text-green-800">
             Login
           </Link>
         </p>

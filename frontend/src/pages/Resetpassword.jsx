@@ -36,7 +36,6 @@ function Resetpassword() {
     if (!location?.state?.data?.success) {
       navigate("/");
     }
-
     if (location?.state?.email) {
       setData((preve) => {
         return {
@@ -65,26 +64,19 @@ function Resetpassword() {
   */
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    ///optional
+    //optional
     if (data.newPassword !== data.confirmPassword) {
       toast.error("New password and confirm password must be same.");
       return;
     }
-
     try {
       const response = await Axios({
         ...SummaryApi.resetpassword,
         data: data,
       });
-
-      if (response.data.error) {
-        toast.error(response.data.message);
-      }
-
       if (response.data.success) {
         toast.success(response.data.message);
-        navigate("/login");
+        navigate("/login"); //go to pages/loginPage
         setData({
           email: "",
           newPassword: "",
@@ -97,7 +89,7 @@ function Resetpassword() {
   };
 
   return (
-    <section className="w-full container mx-auto px-2 lg:pt-20 pt-24">
+    <section className="w-full container mx-auto px-2">
       <div className="bg-white my-4 w-full max-w-lg mx-auto rounded p-7">
         <p className="font-semibold text-lg">Enter Your Password </p>
         <form className="grid gap-4 py-4" onSubmit={handleSubmit}>
@@ -144,7 +136,9 @@ function Resetpassword() {
           </button>
         </form>
         <p>Already have account?{" "}
-          <Link to={"/login"} className="font-semibold text-green-700 hover:text-green-800">
+          <Link 
+            to={"/login"}  //go to pages/loginPage
+            className="font-semibold text-green-700 hover:text-green-800">
             Login
           </Link>
         </p>

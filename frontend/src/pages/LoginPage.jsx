@@ -10,19 +10,17 @@ import fetchUserDetails from "../utils/fetchUserDetails";
 import { useDispatch } from "react-redux";
 import { setUserDetails } from "../store/userSlice";
 
-const Login = () => {
+const LoginPage = () => {
   const [data, setData] = useState({
     email: "",
     password: "",
   });
-
   const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-
     setData((preve) => {
       return {
         ...preve,
@@ -35,20 +33,16 @@ const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     try {
       const response = await Axios({
         ...SummaryApi.login,
         data: data,
       });
-
-      if (response.data.error) {
-        toast.error(response.data.message);
-      }
-
       if (response.data.success) {
         toast.success(response.data.message);
-        localStorage.setItem("accesstoken", response.data.data.accesstoken);
+        // console.log(response);
+        
+        localStorage.setItem("accessToken", response.data.data.accessToken);
         localStorage.setItem("refreshToken", response.data.data.refreshToken);
 
         const userDetails = await fetchUserDetails();
@@ -66,7 +60,7 @@ const Login = () => {
     }
   };
   return (
-    <section className="w-full container mx-auto px-2 lg:pt-20 pt-24">
+    <section className="w-full container mx-auto px-2">
       <div className="bg-white my-4 w-full max-w-lg mx-auto rounded p-7">
         <form className="grid gap-4 py-4" onSubmit={handleSubmit}>
           <div className="grid gap-1">
@@ -101,7 +95,7 @@ const Login = () => {
               </div>
             </div>
             <Link
-              to={"/forgotPassword"}
+              to={"/forgotPassword"} //go to pages/forgotPassword
               className="block ml-auto hover:text-primary-200"
             >
               Forgot password ?
@@ -110,12 +104,7 @@ const Login = () => {
 
           <button
             disabled={!valideValue}
-            className={` ${
-              valideValue
-                ? "bg-green-800 hover:bg-green-700"
-                : "bg-gray-500 cursor-not-allowed"
-            }    text-white py-2 rounded font-semibold my-3 tracking-wide`}
-          >
+            className={`${valideValue ? "bg-green-800 hover:bg-green-700": "bg-gray-500 cursor-not-allowed"} text-white py-2 rounded font-semibold my-3 tracking-wide`}>
             Login
           </button>
         </form>
@@ -123,9 +112,8 @@ const Login = () => {
         <p>
           Don't have account?{" "}
           <Link
-            to={"/register"}
-            className="font-semibold text-green-700 hover:text-green-800"
-          >
+            to={"/register"}  //go to pages/Register
+            className="font-semibold text-green-700 hover:text-green-800">
             Register
           </Link>
         </p>
@@ -134,4 +122,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default LoginPage;

@@ -22,7 +22,7 @@ function VerifyForgotPasswordOtp() {
 
   useEffect(() => {
     if (!location?.state?.email) {
-      navigate("/forgotPassword");
+      navigate("/forgotPassword"); //go to pages/forgotPassword
     }
   }, []);
 
@@ -30,7 +30,6 @@ function VerifyForgotPasswordOtp() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     try {
       const response = await Axios({
         ...SummaryApi.verifyForgotPasswordOtp,
@@ -39,18 +38,13 @@ function VerifyForgotPasswordOtp() {
           email: location?.state?.email,
         },
       });
-
-      if (response.data.error) {
-        toast.error(response.data.message);
-      }
-
       if (response.data.success) {
         toast.success(response.data.message);
         setData(["", "", "", "", "", ""]);
-        navigate("/resetpassword", {
+        navigate("/resetpassword", { //go to pages/resetPassword
           state: {
             data: response.data,
-            email: location?.state?.email,
+            email: location?.state?.email, //reset password mi email chayai
           },
         });
       }
@@ -61,7 +55,7 @@ function VerifyForgotPasswordOtp() {
   };
 
   return (
-    <section className="w-full container mx-auto px-2 lg:pt-20 pt-24">
+    <section className="w-full container mx-auto px-2">
       <div className="bg-white my-4 w-full max-w-lg mx-auto rounded p-7">
         <p className="font-semibold text-lg">Enter OTP</p>
         <form className="grid gap-4 py-4" onSubmit={handleSubmit}>
@@ -71,7 +65,7 @@ function VerifyForgotPasswordOtp() {
               {data.map((element, index) => {
                 return (
                   <input
-                    key={"otp" + index}
+                    key={index}
                     type="text"
                     id="otp"
                     ref={(ref) => {
@@ -82,7 +76,6 @@ function VerifyForgotPasswordOtp() {
                     onChange={(e) => {
                       const value = e.target.value;
                       // console.log("value", value);
-
                       const newData = [...data];
                       newData[index] = value;
                       setData(newData);

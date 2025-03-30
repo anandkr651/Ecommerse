@@ -41,12 +41,7 @@ const Register = () => {
         ...SummaryApi.register,
         data: data,
       });
-      console.log(response);
-
-      if (response.data.error) {
-        toast.error(response.data.message);
-      }
-
+      // console.log(response);
       if (response.data.success) {
         toast.success(response.data.message);
         setData({
@@ -55,7 +50,7 @@ const Register = () => {
           password: "",
           confirmPassword: "",
         });
-        navigate("/login");
+        navigate("/login"); //go to pages/loginPage
       }
     } catch (error) {
       AxiosToastError(error);
@@ -144,7 +139,7 @@ const Register = () => {
         <p>
           Already have account ?{" "}
           <Link
-            to={"/login"}
+            to={"/login"}  //go to pages/loginPage
             className="font-semibold text-green-700 hover:text-green-800"
           >
             Login
