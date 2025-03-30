@@ -12,7 +12,7 @@ import { IoCameraReverse } from "react-icons/io5";
 
 function Profile() {
   const user = useSelector((state) => state.user);
-  //   console.log("profile",user);
+  //console.log("profile",user);
   const [openProfileAvatar, setOpenProfileAvatar] = useState(false);
   const [userData, setUserData] = useState({
     name: user.name,
@@ -29,9 +29,9 @@ function Profile() {
       mobile: user.mobile,
     });
   }, [user]);
+
   const handleOnChange = (e) => {
     const { name, value } = e.target;
-
     setUserData((preve) => {
       return {
         ...preve,
@@ -42,22 +42,18 @@ function Profile() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     try {
       setLoading(true);
       const response = await Axios({
         ...SummaryApi.updateUserDetails,
         data: userData,
       });
-
       const { data: responseData } = response;
-
       if (responseData.success) {
         toast.success(responseData.message);
         const userData = await fetchUserDetails();
         dispatch(setUserDetails(userData.data.data));
         setLoading(false);
-
       }
     } catch (error) {
       AxiosToastError(error);
@@ -79,7 +75,7 @@ function Profile() {
       )}
       </div>
 
-      {/**name, mobile , email, change password */}
+      {/*name, mobile , email, change password */}
       <form className="my-4 grid gap-4" onSubmit={handleSubmit}>
         <div className="grid">
           <label>Name</label>

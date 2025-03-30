@@ -8,8 +8,7 @@ import { updatedAvatar } from "../store/userSlice";
 import { IoClose } from "react-icons/io5";
 import DummyAvatar from "../assets/man.png";
 
-function UserProfileAvatarEdit({ close }) {
-  // close yaha par profile.jsx se aaya hai
+function UserProfileAvatarEdit({ close }) { // close yaha par profile.jsx se aaya hai
   const user = useSelector((state) => state.user);
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(false);
@@ -19,7 +18,7 @@ function UserProfileAvatarEdit({ close }) {
   };
 
   const handleUploadAvatarImage = async (e) => {
-    const file = e.target.files[0];
+    const file = e.target.files[0];    
     if (!file) {
       return;
     }
@@ -31,16 +30,13 @@ function UserProfileAvatarEdit({ close }) {
         ...SummaryApi.uploadAvatar,
         data: formData,
       });
-      // console.log(response);
       toast.success(response.data.message);
-      // window.location.reload()
       const { data: responseData } = response;
-
       dispatch(updatedAvatar(responseData.data.avatar));
+      setLoading(false);
+      close()
     } catch (error) {
       AxiosToastError(error);
-    } finally {
-      setLoading(false);
     }
   };
   return (
