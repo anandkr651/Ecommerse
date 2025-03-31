@@ -10,7 +10,7 @@ import {
 const router = Router();
 
 router.route("/addCategory").post(verifyJWT, AddCategory);
-router.route("/getCategory").get(verifyJWT, getCategory);
+router.route("/getCategory").get(getCategory);
 router.route("/updateCategory").post(verifyJWT, updateCategory);
 router.route("/deleteCategory").delete(verifyJWT, deleteCategory);
 
