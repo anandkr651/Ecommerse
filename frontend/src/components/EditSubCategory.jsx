@@ -33,9 +33,7 @@ function EditSubCategory({ data: subCategoryData, fetchData, close }) {
       return;
     }
     const response = await uploadImage(file);
-
     const { data: ImageResponse } = response;
-    // console.log(ImageResponse);
     setLoading(false);
     setData((prev) => {
       return {
@@ -44,7 +42,6 @@ function EditSubCategory({ data: subCategoryData, fetchData, close }) {
       };
     });
   };
-  // console.log(data);
 
   const handleSubmit = async (e) => {
     e.preventDefault();

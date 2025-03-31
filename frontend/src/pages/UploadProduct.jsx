@@ -10,7 +10,6 @@ import AddFieldComponent from "../components/AddFieldComponent";
 import Axios from "../utils/Axios";
 import SummaryApi from "../common/SummaryApi";
 import AxiosToastError from "../utils/AxiosToastError";
-// import toast from "react-hot-toast";
 import successAlert from "../utils/successAlert";
 
 function UploadProduct() {
@@ -54,11 +53,8 @@ function UploadProduct() {
       return;
     }
     const response = await uploadImage(file);
-
     const { data: ImageResponse } = response;
-    // console.log(ImageResponse);
     const imageUrl = ImageResponse?.data;
-
     setData((prev) => {
       return {
         ...prev,
@@ -117,17 +113,25 @@ function UploadProduct() {
         data: data,
       });
       const { data: responseData } = response;
-
       if (responseData.success) {
-        // toast.success(responseData.message);
         successAlert(responseData.message);
-        // setData("")
+        setData({
+          name: "",
+          image: [],
+          category: [],
+          subCategory: [],
+          unit: "",
+          stock: "",
+          price: "",
+          discount: "",
+          description: "",
+          moreDetail: {},
+        })
       }
     } catch (error) {
       AxiosToastError(error);
     }
   };
-  // console.log(data);
 
   return (
     <section>
@@ -226,7 +230,6 @@ function UploadProduct() {
                 value={selectCategory}
                 onChange={(e) => {
                   const value = e.target.value;
-                  // console.log(value);
                   const category = allcategory.find((el) => el._id === value);
                   // console.log(category);
                   setData((prev) => {

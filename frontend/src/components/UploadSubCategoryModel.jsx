@@ -16,6 +16,7 @@ function UploadSubCategoryModel({ close, fetchData }) {
   });
   const [loading, setLoading] = useState(false);
   const allCategory = useSelector((state) => state.product.allCategory);
+  const [selectCategory, setSelectCategory] = useState("");
 
   const handleOnChange = (e) => {
     const { name, value } = e.target;
@@ -34,10 +35,7 @@ function UploadSubCategoryModel({ close, fetchData }) {
       return;
     }
     const response = await uploadImage(file);
-
     const { data: ImageResponse } = response;
-    // console.log(ImageResponse);
-
     setData((prev) => {
       return {
         ...prev,
@@ -46,12 +44,9 @@ function UploadSubCategoryModel({ close, fetchData }) {
     });
     setLoading(false);
   };
-  // console.log(data);   //in this place the image is not show because state updates in React are asynchronous, data won't have the updated value immediately.
 
   const handleRemoveCategorySelected = (categoryId) => {
     const index = data.category.findIndex((el) => el._id === categoryId);
-    // console.log(index);
-
     data.category.splice(index, 1);
     setData((prev) => {
       return {
@@ -81,8 +76,8 @@ function UploadSubCategoryModel({ close, fetchData }) {
   return (
     <section className="fixed top-0 bottom-0 left-0 right-0 p-4 bg-neutral-800 bg-opacity-60 flex items-center justify-center flex-col">
       <div className="bg-white max-w-4xl w-full p-4 rounded">
-        <div className="flex items-center justify-center">
-          <h1 className="font-semibold">Category</h1>
+        <div className="flex items-center justify-center shadow-lg px-2 py-1 rounded-md mb-2">
+          <h1 className="font-semibold">Sub Category</h1>
           <button className="w-fit block ml-auto" onClick={close}>
             <IoClose />
           </button>
@@ -138,29 +133,11 @@ function UploadSubCategoryModel({ close, fetchData }) {
           </div>
           <div className="grid gap-1">
             <label htmlFor="">Select Category</label>
-            <div className="border focus-within:border-primary-200 rounded-lg">
-              {/* display value */}
-              <div className="flex flex-wrap gap-2">
-                {data.category.map((cat, index) => {
-                  return (
-                    <p
-                      key={index}
-                      className="bg-white shadow-md px-1 m-1 flex justify-center items-center rounded-lg cursor-pointer"
-                    >
-                      {cat.name}
-                      <button
-                        className="hover:text-red-500 pl-1"
-                        onClick={() => handleRemoveCategorySelected(cat._id)}
-                      >
-                        <IoClose />
-                      </button>
-                    </p>
-                  );
-                })}
-              </div>
+            <div className="">
               {/* select category */}
               <select
-                className="w-full p-1 bg-transparent outline-none"
+                className="w-full p-1 bg-transparent outline-none border focus-within:border-primary-200 rounded-lg"
+                value={selectCategory}
                 onChange={(e) => {
                   const value = e.target.value;
                   const categoryDetails = allCategory.find(
@@ -172,6 +149,7 @@ function UploadSubCategoryModel({ close, fetchData }) {
                       category: [...prev.category, categoryDetails],
                     };
                   });
+                  setSelectCategory("");
                 }}
               >
                 <option value="">Select Category</option>
@@ -183,6 +161,25 @@ function UploadSubCategoryModel({ close, fetchData }) {
                   );
                 })}
               </select>
+              {/* display value */}
+              <div className="flex flex-wrap gap-2">
+                {data.category.map((cat, index) => {
+                  return (
+                    <p
+                      key={index}
+                      className="bg-white shadow-md px-1 m-1 flex justify-center items-center rounded-lg cursor-pointer group"
+                    >
+                      {cat.name}
+                      <button
+                        className="text-red-500 pl-1 lg:hidden group-hover:block"
+                        onClick={() => handleRemoveCategorySelected(cat._id)}
+                      >
+                        <IoClose />
+                      </button>
+                    </p>
+                  );
+                })}
+              </div>
             </div>
           </div>
           <button

@@ -26,23 +26,24 @@ function UploadCategoryModel({ fetchData, close }) {
   };
 
   const handleUploadCategoryImage = async (e) => {
-    setLoading(true);
-    const file = e.target.files[0];
-    if (!file) {
-      return;
+    try {
+      setLoading(true);
+      const file = e.target.files[0];
+      if (!file) {
+        return;
+      }
+      const response = await uploadImage(file);
+      const { data: ImageResponse } = response;
+      setData((prev) => {
+        return {
+          ...prev,
+          image: ImageResponse.data,
+        };
+      });
+      setLoading(false);
+    } catch (error) {
+      AxiosToastError(error)
     }
-    const response = await uploadImage(file);
-
-    const { data: ImageResponse } = response;
-    // console.log(ImageResponse);
-
-    setData((prev) => {
-      return {
-        ...prev,
-        image: ImageResponse.data,
-      };
-    });
-    setLoading(false);
   };
   // console.log(data);   //in this place the image is not show because state updates in React are asynchronous, data won't have the updated value immediately.
 

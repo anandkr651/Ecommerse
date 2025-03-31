@@ -7,7 +7,7 @@ import SummaryApi from "../common/SummaryApi";
 import AxiosToastError from "../utils/AxiosToastError";
 import { Link, useNavigate } from "react-router-dom";
 import fetchUserDetails from "../utils/fetchUserDetails";
-import { useDispatch } from "react-redux";
+import { useDispatch,} from "react-redux";
 import { setUserDetails } from "../store/userSlice";
 
 const LoginPage = () => {

@@ -11,7 +11,7 @@ import { MdDelete } from "react-icons/md";
 import EditSubCategory from "../components/EditSubCategory";
 import ConformBox from "../components/ConformBox";
 import toast from "react-hot-toast";
-import Category from "./Category";
+import Loading from "../components/Loading";
 
 function SubCategory() {
   const [openUploadSubCategory, setOpenUploadSubCategory] = useState(false);
@@ -45,7 +45,6 @@ function SubCategory() {
   useEffect(() => {
     fetchSubCategory();
   }, []);
-  console.log(data);
 
   const column = [
     columnHelper.accessor("name", {
@@ -122,10 +121,7 @@ function SubCategory() {
         ...SummaryApi.deleteSubCategory,
         data: deleteSubCategory,
       });
-      // console.log(response);
-
       const { data: responseData } = response;
-
       if (responseData.success) {
         toast.success(responseData.message);
         fetchSubCategory();
@@ -148,9 +144,13 @@ function SubCategory() {
         </button>
       </div>
 
-      <div className="overflow-auto ">
-        <DisplayTable data={data} column={column} />
-      </div>
+      {loading ? (
+        <Loading />
+      ) : (
+        <div className="overflow-auto">
+          <DisplayTable data={data} column={column} />
+        </div>
+      )}
 
       {openUploadSubCategory && (
         <UploadSubCategoryModel

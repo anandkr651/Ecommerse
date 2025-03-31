@@ -24,9 +24,6 @@ function ProductAdmin() {
         },
       });
       const { data: responseData } = response;
-
-      // console.log(responseData);
-
       if (responseData.success) {
         setProductData(responseData.data);
         setTotalPageCount(responseData.totalNoPage);
@@ -34,8 +31,6 @@ function ProductAdmin() {
       setLoading(false);
     } catch (error) {
       AxiosToastError(error);
-    } finally {
-      setLoading(false); // Ensure loading stops even if request fails
     }
   };
 
@@ -44,6 +39,7 @@ function ProductAdmin() {
       setPage((prev) => prev + 1);
     }
   };
+  
   const handlePrevious = () => {
     if (page > 1) {
       setPage((prev) => prev - 1);
@@ -59,7 +55,7 @@ function ProductAdmin() {
   useEffect(() => {
     let flag = true;
     const interval = setTimeout(() => {
-      if(flag){
+      if (flag) {
         fetchProductData();
         flag = false;
       }
@@ -84,23 +80,31 @@ function ProductAdmin() {
             />
           </div>
         </div>
-        {loading && <Loading />}
-        <div className=" bg-blue-100 p-2">
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
-            {productData.map((p, index) => {
-              return (
-                <div key={index}>
-                  <ProductCardAdmin
-                    data={p}
-                  />
+        <div className="bg-blue-100 p-2">
+          <div className="flex items-center justify-center h-full">
+            {loading ? (
+              <Loading />
+            ) : (
+              <div className="min-h-[55vh]">
+                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+                  {productData.map((p, index) => {
+                    return (
+                      <div key={index}>
+                        <ProductCardAdmin
+                          data={p}
+                          fetchProduct={fetchProductData}
+                        />
+                      </div>
+                    );
+                  })}
                 </div>
-              );
-            })}
+              </div>
+            )}
           </div>
           <div className="flex justify-between my-4">
             <button
               onClick={handlePrevious}
-              className="border border-primary-200 px-4 hover:bg-primary-100"
+              className="border border-primary-200 px-4 hover:bg-primary-100 text-yellow-600 hover:text-white rounded-md font-medium"
             >
               Previous
             </button>
@@ -109,7 +113,7 @@ function ProductAdmin() {
             </button>
             <button
               onClick={handleNext}
-              className="border border-primary-200 px-4 hover:bg-primary-100"
+              className="border border-primary-200 px-4 hover:bg-primary-100 text-yellow-600 hover:text-white rounded-md font-medium"
             >
               Next
             </button>

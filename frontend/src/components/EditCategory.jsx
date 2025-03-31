@@ -33,9 +33,7 @@ function EditCategory({ close, fetchData, data: categoryData }) {
       return;
     }
     const response = await uploadImage(file);
-
     const { data: ImageResponse } = response;
-    // console.log(ImageResponse);
     setLoading(false);
     setData((prev) => {
       return {

@@ -8,8 +8,8 @@ const Axios = axios.create({
 
 //sending access token in the header
 Axios.interceptors.request.use(
-  async (config) => {
-    const accessToken = localStorage.getItem("accesstoken");
+  async(config) => {
+    const accessToken = await localStorage.getItem("accessToken");
 
     if (accessToken) {
       config.headers.Authorization = `Bearer ${accessToken}`;
@@ -24,7 +24,7 @@ Axios.interceptors.request.use(
 
 //extend the life span of access token with
 // the help refresh
-Axios.interceptors.request.use(
+Axios.interceptors.response.use(
   (response) => {
     return response;
   },
@@ -34,7 +34,7 @@ Axios.interceptors.request.use(
     if (error.response.status === 401 && !originRequest.retry) {
       originRequest.retry = true;
 
-      const refreshToken = localStorage.getItem("refreshToken");
+      const refreshToken = await localStorage.getItem("refreshToken");
 
       if (refreshToken) {
         const newAccessToken = await refreshAccessToken(refreshToken);
@@ -57,10 +57,9 @@ const refreshAccessToken = async (refreshToken) => {
       headers: {
         Authorization: `Bearer ${refreshToken}`,
       },
-    });
-
+    });    
     const accessToken = response.data.data.accessToken;
-    localStorage.setItem("accesstoken", accessToken);
+    await localStorage.setItem("accessToken", accessToken);
     return accessToken;
   } catch (error) {
     console.log(error);

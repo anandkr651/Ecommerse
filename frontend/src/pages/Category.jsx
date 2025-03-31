@@ -21,15 +21,12 @@ function Category() {
   const [openConfirmBoxDelete, setOpenConfirmBoxDelete] = useState(false);
   const [deleteCategory, setDeleteCategory] = useState({ _id: "" });
 
-  // go to the app.jsx
-
   const fetchCatagory = async () => {
     try {
       const response = await Axios({
         ...SummaryApi.getCategory,
       });
       const { data: responseData } = response;
-
       if (responseData.success) {
         setCategoryData(responseData.data);
       }
@@ -42,11 +39,10 @@ function Category() {
   useEffect(() => {
     fetchCatagory();
   }, []);
-  // console.log(categoryData);
 
+  // console.log(categoryData);
   // const allCategory = useSelector(state => state.product.allCategory)
   // // console.log(allCategory);
-
   // useEffect(()=>{
   //   setCategoryData(allCategory)
   // },[allCategory])
@@ -57,10 +53,7 @@ function Category() {
         ...SummaryApi.deleteCategory,
         data: deleteCategory,
       });
-      // console.log(response);
-
       const { data: responseData } = response;
-
       if (responseData.success) {
         toast.success(responseData.message);
         fetchCatagory();
