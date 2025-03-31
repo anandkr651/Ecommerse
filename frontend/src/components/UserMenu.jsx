@@ -27,7 +27,6 @@ function UserMenu({ close }) {
       const response = await Axios({
         ...SummaryApi.logout,
       });
-      // console.log("logout", response);
       if (response.data.success) {
         if (close) {
           close();
@@ -45,52 +44,77 @@ function UserMenu({ close }) {
     <div className="px-2 py-3">
       <div className="font-semibold "> My Account </div>
       <div className="text-sm capitalize italic font-normal flex">
-        Hello {user.name} ji <span className="uppercase text-red-500 font-medium px-1">({user.role})</span>
-        <Link onClick={handleClose} to={"/dashboard/profile"} className="hover:text-orange-400">
+        Hello {user.name} ji{" "}
+        <span className="uppercase text-red-500 font-medium px-1">
+          ({user.role})
+        </span>
+        <Link
+          onClick={handleClose}
+          to={"/dashboard/profile"}  //go to pages/profile 
+          className="hover:text-orange-400"
+        >
           <FaExternalLinkAlt />
         </Link>{" "}
       </div>
       <Divider />
       <div className="flex flex-col text-center gap-2">
+        {isAdmin(user.role) && (
+          <Link
+            onClick={handleClose}
+            to={"/dashboard/category"} //go to pages/category
+            className="bg-orange-300 rounded-md hover:bg-orange-400"
+          >
+            Category
+          </Link>
+        )}
 
-        {
-          isAdmin(user.role) &&(
-            <Link onClick={handleClose} to={"/dashboard/category"} className="bg-orange-300 rounded-md hover:bg-orange-400">
-              Category
-            </Link>
-          )
-        }
+        {isAdmin(user.role) && (
+          <Link
+            onClick={handleClose}
+            to={"/dashboard/subCategory"} //go to pages/subcategory
+            className="bg-orange-300 rounded-md hover:bg-orange-400"
+          >
+            Sub Category
+          </Link>
+        )}
 
-        {
-          isAdmin(user.role) &&(
-            <Link onClick={handleClose} to={"/dashboard/subCategory"} className="bg-orange-300 rounded-md hover:bg-orange-400">
-              Sub Category
-            </Link>
-          )
-        }
+        {isAdmin(user.role) && (
+          <Link
+            onClick={handleClose}
+            to={"/dashboard/uploadProduct"} //go to pages/uploadProduct
+            className="bg-orange-300 rounded-md hover:bg-orange-400"
+          >
+            Upload Product
+          </Link>
+        )}
 
-        {
-          isAdmin(user.role) &&(
-            <Link onClick={handleClose} to={"/dashboard/uploadProduct"} className="bg-orange-300 rounded-md hover:bg-orange-400">
-              Upload Product
-            </Link>
-          )
-        }
-
-        {
-          isAdmin(user.role) &&(
-            <Link onClick={handleClose} to={"/dashboard/product"} className="bg-orange-300 rounded-md hover:bg-orange-400">
-              Product
-            </Link>
-          )
-        }
-        <Link onClick={handleClose} to={"/dashboard/myOrder"} className="bg-orange-300 rounded-md hover:bg-orange-400">
+        {isAdmin(user.role) && (
+          <Link
+            onClick={handleClose}
+            to={"/dashboard/product"} //go to pages/productAdmin
+            className="bg-orange-300 rounded-md hover:bg-orange-400"
+          >
+            Product
+          </Link>
+        )}
+        <Link
+          onClick={handleClose}
+          to={"/dashboard/myOrder"} //go to pages/myorder
+          className="bg-orange-300 rounded-md hover:bg-orange-400"
+        >
           My Orders
         </Link>
-        <Link onClick={handleClose} to={"/dashboard/address"} className="bg-orange-300 rounded-md hover:bg-orange-400">
+        <Link
+          onClick={handleClose}
+          to={"/dashboard/address"} //go to pages/address
+          className="bg-orange-300 rounded-md hover:bg-orange-400"
+        >
           Save Address
         </Link>
-        <button onClick={handleLogout} className="bg-red-400 rounded-md hover:bg-red-500">
+        <button
+          onClick={handleLogout}
+          className="bg-red-400 rounded-md hover:bg-red-500"
+        >
           Logout
         </button>
       </div>

@@ -33,7 +33,7 @@ const addSubCategory = async (req, res) => {
 const getSubCategory = async (req, res) => {
     try {
         const data = await SubCategory.find()
-            .sort({ createdAt: -1 })
+            // .sort({ createdAt: -1 })
             .populate("category");
 
         return res.status(200).json({

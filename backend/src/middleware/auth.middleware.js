@@ -25,7 +25,7 @@ const verifyJWT = async (req, res, next) => {
         next();
     } catch (error) {
         return res.status(500).json({
-            message: "invalid access token",
+            message: "You have not login",
             success: false,
             error: true,
         });

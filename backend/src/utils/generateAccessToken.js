@@ -1,4 +1,5 @@
 import jwt from "jsonwebtoken";
+import { User } from "../model/user.model.js";
 
 const generateAccessToken = async (userId) => {
     const token = await jwt.sign(
@@ -7,6 +8,10 @@ const generateAccessToken = async (userId) => {
         {
             expiresIn: process.env.ACCESS_TOKEN_EXPIRY,
         }
+    );
+    const updateAccessToken = await User.updateOne(
+        { _id: userId },
+        { accessToken: token }
     );
     return token;
 };

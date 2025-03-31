@@ -43,7 +43,8 @@ const AddCategory = async (req, res) => {
 
 const getCategory = async (req, res) => {
     try {
-        const data = await Category.find().sort({ createdAt: -1 });
+        const data = await Category.find();
+        // .sort({ createdAt: -1 });
         return res.status(200).json({
             data: data,
             error: false,
