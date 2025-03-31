@@ -10,24 +10,36 @@ function Search() {
   const location = useLocation();
   const [isSearchPage, setIsSearchPage] = useState(false);
   const [isMobile] = useMobile();
+  const param = useLocation()
+  const searchText = param.search.slice(3)
+  // console.log(param.search);
+  // "?q=acvca" //search box==acvca
 
   const redirectToSearchPage = () => {
-    navigate("/search");
+    navigate("/search");  //go to pages/searchPage
   };
   useEffect(() => {
     const isSearch = location.pathname === "/search";
     setIsSearchPage(isSearch);
   }, [location]);
 
+  const handleOnChange = (e)=>{
+     const value = e.target.value
+    //  console.log(value);
+    const url = `/search?q=${value}`
+    navigate(url)  //go to pages/searchPage
+    
+  }
+
   return (
     <div className="w-full min-w-[320px] lg:min-w-[420px] h-12 rounded-xl flex items-center overflow-hidden outline-none border-2 border-slate-500 focus-within:border-primary-200 ">
-      <div className="px-3">
+      <div className="px-2">
         {isMobile && isSearchPage ? (
-          <Link to={"/"} className="p-2 rounded-full shadow-md">
+          <Link to={"/"} className="p-2 rounded-full flex items-center shadow-2xl">
             <FaArrowLeft />
           </Link>
         ) : (
-          <FcSearch className="text-2xl " />
+          <FcSearch className="text-2xl" />
         )}
       </div>
       <div>
@@ -83,9 +95,11 @@ function Search() {
           <div>
             <input
               type="text"
-              placeholder="search for grocery"
-              className="w-full min-w-[220px] lg:min-w-[420px] h-12 flex items-center overflow-hidden outline-none text-xl text-slate-700 "
+              placeholder="Search any product"
+              className="w-full min-w-[270px] lg:min-w-[354px] h-12 flex items-center overflow-hidden outline-none text-xl text-slate-700"
               autoFocus
+              onChange={handleOnChange}
+              defaultValue={searchText}
             />
           </div>
         )}

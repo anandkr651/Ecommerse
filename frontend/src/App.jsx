@@ -67,8 +67,7 @@ function App() {
   //     const {data:responseData} = response
   //     dispatch(handleAddCartItem(responseData.data))
   //   } catch (error) {
-  //     // AxiosToastError(error)
-  //     // console.log(error);
+  //     AxiosToastError(error)
   //   }
   // }
 

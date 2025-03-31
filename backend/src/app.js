@@ -31,4 +31,7 @@ app.use("/api/v1/subCategory", subCategoryRoute);
 import productRoute from "./routes/product.routes.js";
 app.use("/api/v1/product", productRoute);
 
+import cartProductRoute from "./routes/cartProduct.routes.js";
+app.use("/api/v1/cartProduct", cartProductRoute);
+
 export default app;

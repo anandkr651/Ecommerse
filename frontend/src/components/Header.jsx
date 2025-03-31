@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, {useState } from "react";
 import logo from "../assets/logo.png";
 import { Link, useLocation } from "react-router-dom";
 import Search from "./Search";
@@ -10,6 +10,10 @@ import { GoTriangleUp } from "react-icons/go";
 import { GoTriangleDown } from "react-icons/go";
 import UserMenu from "./UserMenu";
 import { useNavigate } from "react-router-dom";
+import displayPriceInRupees from "../utils/DisplayPriceRupees";
+import { useGlobalContext } from "../provider/globalProvider";
+import DisplayCartItem from "./DisplayCartItem";
+// import priceWithDiscount from "../utils/priceWithDiscount";
 
 function Header() {
   const [isMobile] = useMobile();
@@ -24,7 +28,7 @@ function Header() {
     state:null 
   */
 
-  const isSearchPage = location.pathname === "/search";
+  const isSearchPage = location.pathname === "/search";  //go to the pages/searchPage.jsx 
 
   const user = useSelector((state) => state?.user);
   // console.log(user);
@@ -43,23 +47,44 @@ function Header() {
   */
 
   const [openUserMenu, setOpenUserMenu] = useState(false);
+  const cartItem = useSelector((state)=>state.cartItem.cart)
+  // // console.log(cartItem);
+  // const [totalPrice,setTotalPrice] = useState(0)
+  // const [totalQty,setTotalQty] = useState(0)
+
+  const {totalPrice,totalQty } = useGlobalContext()
+  const [openCartItem ,setOpenCartItem] =useState(false)
+
 
   const handleMobileUser = () => {
     if (!user._id) {
-      navigate("/login");
+      navigate("/login"); //go to pages/loginPage
+      return
     }
-    navigate("/userMobile");
+    navigate("/userMobile"); //go to pages/UserMenuMobile
   };
 
   const handleCloseUserMenu = () => {
     setOpenUserMenu(false);
   };
 
+  // useEffect(()=>{
+  //  const qty = cartItem.reduce((prev,curr)=>{
+  //   return prev +curr.quantity
+  //  },0)
+  //  setTotalQty(qty)
+  //  const tprice = cartItem.reduce((prev,curr)=>{
+  //   return prev + (priceWithDiscount(curr.productId.price, curr.productId.discount)* curr.quantity)
+  //  },0)
+  // //  console.log(tprice);
+  //  setTotalPrice(tprice)
+  // },[cartItem])
+
   return (
     <div>
-      <header className="h-24 md:h-20 md:shadow-md fixed top-0 z-40 flex flex-col justify-center gap-1 bg-white w-full">
+      <header className="h-24 md:h-20 md:shadow-md z-40 flex flex-col justify-center gap-1 bg-white w-full">
         {!(isSearchPage && isMobile) && (
-          <div className="container mx-auto flex items-center justify-between">
+          <div className="container mx-auto flex items-center justify-between px-4">
             {/**logo */}
             <div className="h-full">
               <Link
@@ -105,7 +130,7 @@ function Header() {
               {/* desktop */}
               <div className="hidden md:flex items-center justify-center gap-4 cursor-pointer">
                 {user?._id ? (
-                  <div className="relative ">
+                  <div className="">
                     <div
                       className="flex items-center gap-2"
                       onClick={() => setOpenUserMenu((prev) => !prev)}
@@ -118,7 +143,7 @@ function Header() {
                       )}
                     </div>
                     {openUserMenu && (
-                      <div className="absolute right-0 top-12 ">
+                      <div className="absolute right-2 top-20 ">
                         <div className="bg-white md:shadow-lg rounded p-4 min-w-52">
                           <UserMenu close={handleCloseUserMenu} />
                         </div>
@@ -131,21 +156,28 @@ function Header() {
                   </button>
                 )}
                 {/* add to cart */}
-                <button className="flex items-center bg-green-600 hover:bg-green-500 p-3 rounded-md font-bold ">
+                <button onClick={()=>setOpenCartItem(true)} className="flex items-center bg-green-600 hover:bg-green-500 p-3 rounded-md font-bold ">
                   <div className="animate-bounce">
                     <GiShoppingCart size={28} />
                   </div>
                   <div>
-                    <p>My Cart</p>
+                    {cartItem[0] ? (<div>
+                      <p>{totalQty} Item</p>
+                      <p>{displayPriceInRupees(totalPrice)}</p>
+                    </div>):(<p>My Cart</p>)}
                   </div>
                 </button>
               </div>
             </div>
           </div>
+
         )}
         <div className="md:hidden px-5">
           <Search />
         </div>
+        {openCartItem && (
+          <DisplayCartItem close={()=>setOpenCartItem(false)}/>)
+        }
       </header>
     </div>
   );
