@@ -8,30 +8,40 @@ import { setUserDetails } from "./store/userSlice";
 import { useDispatch } from "react-redux";
 import Axios from "./utils/Axios";
 import SummaryApi from "./common/SummaryApi";
-import AxiosToastError from "./utils/AxiosToastError";
-import { setAllCategory, setAllSubCategory } from "./store/productSlice";
+import {
+  setAllCategory,
+  setAllSubCategory,
+  setLoadingCategory,
+} from "./store/productSlice";
+// import {handleAddCartItem} from "./store/cartProductSlice"
+import GlobalProvider from "./provider/globalProvider";
+import CartMobile from "./components/CartMobile";
 
 function App() {
   const dispatch = useDispatch();
+
   const fetchUser = async () => {
-    const userData = await fetchUserDetails();
-    // console.log(userData.data.data);
-    dispatch(setUserDetails(userData.data.data));
+    try {
+      const userData = await fetchUserDetails();
+      dispatch(setUserDetails(userData.data.data));
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const fetchCatagory = async () => {
     try {
+      dispatch(setLoadingCategory(true));
       const response = await Axios({
         ...SummaryApi.getCategory,
       });
       const { data: responseData } = response;
-
       if (responseData.success) {
         dispatch(setAllCategory(responseData.data));
-        // setCategoryData(responseData.data);
       }
+      dispatch(setLoadingCategory(false));
     } catch (error) {
-      AxiosToastError(error);
+      console.log(error);
     }
   };
 
@@ -41,30 +51,49 @@ function App() {
         ...SummaryApi.getSubCategory,
       });
       const { data: responseData } = response;
-
       if (responseData.success) {
         dispatch(setAllSubCategory(responseData.data));
-        // setCategoryData(responseData.data);
       }
     } catch (error) {
-      AxiosToastError(error);
+      console.log(error);
     }
   };
+
+  // const fetchCartItem = async()=>{
+  //   try {
+  //     const response = await Axios({
+  //       ...SummaryApi.getCartItem
+  //     })
+  //     const {data:responseData} = response
+  //     dispatch(handleAddCartItem(responseData.data))
+  //   } catch (error) {
+  //     // AxiosToastError(error)
+  //     // console.log(error);
+  //   }
+  // }
 
   useEffect(() => {
     fetchUser();
     fetchCatagory();
     fetchSubCatagory();
+    // fetchCartItem()
   }, []);
 
   return (
     <>
-      <Header />
-      <main className="min-h-[75vh]">
-        <Outlet />
-      </main>
-      <Footer />
-      <Toaster />
+      <GlobalProvider>
+        <div className="sticky top-0 ">
+          <Header />
+        </div>
+        <main className="min-h-[75vh]">
+          <Outlet />
+        </main>
+        <Footer />
+        <Toaster />
+        <div className="sticky bottom-0 lg:hidden p-2">
+          <CartMobile />
+        </div>
+      </GlobalProvider>
     </>
   );
 }
