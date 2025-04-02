@@ -3,7 +3,7 @@ const orderSchema = new mongoose.Schema(
     {
         userId: {
             type: mongoose.Schema.ObjectId,
-            ref: "user",
+            ref: "User",
         },
         orderId: {
             type: String,
@@ -15,7 +15,7 @@ const orderSchema = new mongoose.Schema(
             ref: "Product",
         },
         productDetail: {
-            type: String,
+            name: String,
             image: Array,
         },
         paymentId: {

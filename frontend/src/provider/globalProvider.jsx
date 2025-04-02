@@ -6,6 +6,7 @@ import AxiosToastError from "../utils/AxiosToastError";
 import { handleAddCartItem } from "../store/cartProductSlice";
 import toast from "react-hot-toast";
 import priceWithDiscount from "../utils/priceWithDiscount";
+import {handleAddAddress} from "../store/addressSlice"
 
 export const globalContext = createContext(null);
 export const useGlobalContext = () => useContext(globalContext);
@@ -17,6 +18,7 @@ const GlobalProvider = ({ children }) => {
   const [totalPrice, setTotalPrice] = useState(0);
   const [totalQty, setTotalQty] = useState(0);
   const [noDiscountTotalPrice, setNoDiscountTotalPrice] = useState(0);
+  const user = useSelector((state) => state.user);  
 
   const fetchCartItem = async () => {
     try {
@@ -24,9 +26,11 @@ const GlobalProvider = ({ children }) => {
         ...SummaryApi.getCartItem,
       });
       const { data: responseData } = response;
+      if(responseData.success){
       dispatch(handleAddCartItem(responseData.data));
+      }
     } catch (error) {
-      console.log(error);
+      // console.log(error);
     }
   };
   const updateCartQty = async (id, qty) => {
@@ -67,9 +71,25 @@ const GlobalProvider = ({ children }) => {
     }
   };
 
+  const fetchAddress = async()=>{
+    try {
+      const response = await Axios({
+        ...SummaryApi.getAddress
+      })
+      const {data:responseData} = response    
+      if(responseData.success){
+        // toast.success(responseData.message)
+        dispatch(handleAddAddress(responseData.data))
+      }
+    } catch (error) {
+      AxiosToastError(error)
+      
+    }
+  }
   useEffect(() => {
     fetchCartItem();
-  }, []);
+    fetchAddress()
+  }, [user]);
 
   useEffect(() => {
     const qty = cartItem.reduce((prev, curr) => {
@@ -92,7 +112,7 @@ const GlobalProvider = ({ children }) => {
   }, [cartItem]);
 
   return (
-    <globalContext.Provider value={{fetchCartItem,updateCartQty,deleteCartItemQty,totalPrice,totalQty,noDiscountTotalPrice,}}>
+    <globalContext.Provider value={{fetchCartItem,updateCartQty,deleteCartItemQty,totalPrice,totalQty,noDiscountTotalPrice,fetchAddress}}>
       {children}
     </globalContext.Provider>
   );

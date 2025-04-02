@@ -106,12 +106,14 @@ function DisplayCartItem({ close }) {
           <div className="p-2 text-lg font-medium">
             <div className="bg-green-700 p-2 lg:p-4 text-neutral-100 sticky bottom-1 flex items-center justify-between rounded-lg">
               <h3>{displayPriceInRupees(totalPrice)}</h3>
-              <button className="flex items-center justify-center">
+              <Link 
+              to={"/checkOut"} //go to pages/checkOut
+              onClick={close} className="flex items-center justify-center">
                 Proceed
                 <span>
                   <FaCaretRight />
                 </span>
-              </button>
+              </Link>
             </div>
           </div>
         )}

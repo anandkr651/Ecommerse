@@ -15,7 +15,7 @@ function CartMobile() {
   return (
     <>
       <div>
-        {location.pathname === "/cart" ? (
+        {location.pathname === "/cart" || location.pathname ==="/dashboard/address" ? (
           <div></div>
         ) : (
           <div className="flex items-center justify-between px-2 py-1 bg-green-600 hover:bg-green-500 rounded-md font-semibold">

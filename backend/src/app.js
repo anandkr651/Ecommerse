@@ -34,4 +34,10 @@ app.use("/api/v1/product", productRoute);
 import cartProductRoute from "./routes/cartProduct.routes.js";
 app.use("/api/v1/cartProduct", cartProductRoute);
 
+import addressRoute from "./routes/address.routes.js";
+app.use("/api/v1/address", addressRoute);
+
+import orderRoute from "./routes/order.routes.js";
+app.use("/api/v1/order", orderRoute);
+
 export default app;

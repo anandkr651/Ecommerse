@@ -161,7 +161,7 @@ function Header() {
                     <GiShoppingCart size={28} />
                   </div>
                   <div>
-                    {cartItem[0] ? (<div>
+                    {user._id && cartItem[0] ? (<div>
                       <p>{totalQty} Item</p>
                       <p>{displayPriceInRupees(totalPrice)}</p>
                     </div>):(<p>My Cart</p>)}
@@ -175,7 +175,7 @@ function Header() {
         <div className="md:hidden px-5">
           <Search />
         </div>
-        {openCartItem && (
+        {openCartItem && user._id && (
           <DisplayCartItem close={()=>setOpenCartItem(false)}/>)
         }
       </header>

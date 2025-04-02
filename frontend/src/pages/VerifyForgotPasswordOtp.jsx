@@ -84,6 +84,11 @@ function VerifyForgotPasswordOtp() {
                         inputRef.current[index + 1].focus();
                       }
                     }}
+                    onKeyDown={(e) => {
+                      if (e.key === "Backspace" && !data[index] && index > 0) {
+                        inputRef.current[index - 1]?.focus();
+                      }
+                    }}
                     maxLength={1}
                     className="bg-blue-50 w-full max-w-16 p-2 border rounded outline-none focus:border-primary-200 text-center font-semibold"
                   />

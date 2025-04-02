@@ -7,10 +7,10 @@ import { useNavigate } from "react-router-dom";
 import CategoryWiseDisplayProduct from "../components/CategoryWiseDisplayProduct";
 
 function Home() {
-  const loadingCategory = useSelector((state) => state.product.loadingCategory);
   const categoryData = useSelector((state) => state.product.allCategory);
   const subCategoryData = useSelector((state) => state.product.subCategory);
   const navigate = useNavigate();
+  const user = useSelector((state) => state?.user);  
 
   const handleProductListPage = (catId, catName) => {
     const subcategory = subCategoryData.find((sub) => {
@@ -49,7 +49,7 @@ function Home() {
       </div>
       {/* display category */}
       <div className="container mx-auto px-4 my-2 grid lg:grid-cols-10 md:grid-cols-8 grid-cols-4 gap-2">
-        {loadingCategory
+        {!user._id
           ? new Array(20).fill(null).map((c, index) => {
               return (
                 <div
@@ -72,7 +72,7 @@ function Home() {
             })}
       </div>
       {/* display category product */}
-      {categoryData.map((c, index) => {
+      {user._id && categoryData.map((c, index) => {
         return (
           <div key={index}>
             <CategoryWiseDisplayProduct id={c?._id} name={c?.name} />
