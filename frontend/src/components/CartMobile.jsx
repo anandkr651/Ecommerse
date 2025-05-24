@@ -36,7 +36,7 @@ function CartMobile() {
             </div>
             {cartItem[0] && (
               <Link
-                to={"/cart"}
+                to={"/cart"} //go to pages/DisplayCartItemMobile
                 className="flex items-center justify-center  gap-1"
               >
                 <span>view cart</span>

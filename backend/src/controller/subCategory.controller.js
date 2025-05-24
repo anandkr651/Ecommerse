@@ -16,7 +16,6 @@ const addSubCategory = async (req, res) => {
             category,
         });
         const save = await createSubCategory.save();
-
         return res.status(200).json({
             message: "sub category created successfully",
             success: true,
@@ -56,7 +55,7 @@ const updateSubCategory = async (req, res) => {
         const checkSub = await SubCategory.findById(_id);
         if (!checkSub) {
             return res.status(401).json({
-                message: "category is not available",
+                message: "subCategory is not available",
                 success: false,
                 error: true,
             });

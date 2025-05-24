@@ -12,7 +12,6 @@ const AddCategory = async (req, res) => {
                 success: false,
             });
         }
-
         const addCategory = new Category({
             name,
             image,
@@ -25,8 +24,7 @@ const AddCategory = async (req, res) => {
                 success: false,
             });
         }
-
-        return res.json({
+        return res.status(200).json({
             message: "Add Category",
             data: saveCategory,
             success: true,
@@ -62,14 +60,12 @@ const getCategory = async (req, res) => {
 const updateCategory = async (req, res) => {
     try {
         const { _id, name, image } = req.body;
-        const update = await Category.updateOne(
-            { _id: _id },
+        const update = await Category.updateOne({ _id: _id },
             {
                 name,
                 image,
             }
         );
-
         return res.status(200).json({
             message: "Data update successfully",
             error: false,

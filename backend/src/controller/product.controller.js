@@ -77,6 +77,77 @@ const getProduct = async (req, res) => {
     }
 };
 
+const updateProduct = async (req, res) => {
+    try {
+        const {
+            _id,
+            name,
+            image,
+            category,
+            subCategory,
+            unit,
+            stock,
+            price,
+            discount,
+            description,
+            moreDetail,
+        } = req.body;
+        const update = await Product.updateOne({ _id: _id },
+            {
+                name,
+                image,
+                category,
+                subCategory,
+                unit,
+                stock,
+                price,
+                discount,
+                description,
+                moreDetail,
+            }
+        );
+
+        return res.status(200).json({
+            message: "Data update successfully",
+            error: false,
+            success: true,
+            data: update,
+        });
+    } catch (error) {
+        return res.status(500).json({
+            message: error.message || error,
+            error: true,
+            success: false,
+        });
+    }
+};
+
+const deleteProduct = async (req, res) => {
+    try {
+        const { _id } = req.body;
+        if (!_id) {
+            return res.status(500).json({
+                message: "Provide _id",
+                error: true,
+                success: false,
+            });
+        }
+        const deletePro = await Product.deleteOne({ _id: _id });
+
+        return res.status(200).json({
+            message: "Data Delete successfully",
+            error: false,
+            success: true,
+            data: deletePro,
+        });
+    } catch (error) {
+        return res.status(500).json({
+            message: error.message || error,
+            error: true,
+            success: false,
+        });
+    }
+};
 const getProductByCategory = async (req, res) => {
     try {
         const { id } = req.body;
@@ -127,7 +198,10 @@ const getProductByCategoryAndSubCategory = async (req, res) => {
         };
         const skip = (page - 1) * limit;
         const [data, dataCount] = await Promise.all([
-            Product.find(query).sort({ createdAt: -1 }).skip(skip).limit(limit),
+            Product
+               .find(query)
+               .sort({ createdAt: -1 })
+               .skip(skip).limit(limit),
             Product.countDocuments(query),
         ]);
 
@@ -157,78 +231,6 @@ const getProductDetails = async (req, res) => {
             data: product,
             error: false,
             success: true,
-        });
-    } catch (error) {
-        return res.status(500).json({
-            message: error.message || error,
-            error: true,
-            success: false,
-        });
-    }
-};
-const updateProduct = async (req, res) => {
-    try {
-        const {
-            _id,
-            name,
-            image,
-            category,
-            subCategory,
-            unit,
-            stock,
-            price,
-            discount,
-            description,
-            moreDetail,
-        } = req.body;
-        const update = await Product.updateOne(
-            { _id: _id },
-            {
-                name,
-                image,
-                category,
-                subCategory,
-                unit,
-                stock,
-                price,
-                discount,
-                description,
-                moreDetail,
-            }
-        );
-
-        return res.status(200).json({
-            message: "Data update successfully",
-            error: false,
-            success: true,
-            data: update,
-        });
-    } catch (error) {
-        return res.status(500).json({
-            message: error.message || error,
-            error: true,
-            success: false,
-        });
-    }
-};
-
-const deleteProduct = async (req, res) => {
-    try {
-        const { _id } = req.body;
-        if (!_id) {
-            return res.status(500).json({
-                message: "Provide _id",
-                error: true,
-                success: false,
-            });
-        }
-        const deletePro = await Product.deleteOne({ _id: _id });
-
-        return res.status(200).json({
-            message: "Data Delete successfully",
-            error: false,
-            success: true,
-            data: deletePro,
         });
     } catch (error) {
         return res.status(500).json({

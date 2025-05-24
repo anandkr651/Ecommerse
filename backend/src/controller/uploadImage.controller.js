@@ -4,8 +4,7 @@ const uploadImageController = async (req, res) => {
     try {
         const file = req.file?.path;
         const uploadImage = await uploadOnCloudinary(file);
-
-        return res.json({
+        return res.status(200).json({
             message: "Category Image Upload Successfully",
             data: uploadImage.url,
             success: true,

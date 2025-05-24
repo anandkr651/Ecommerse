@@ -55,11 +55,9 @@ function CategoryWiseDisplayProduct({ id, name }) {
       return filterData ? true : null;
     });
 
-    const url = `/${validUrlConverter(catName)}-${catId}/${validUrlConverter(
-      subcategory.name
-    )}-${subcategory._id}`;
+    const url = `/${validUrlConverter(catName)}-${catId}/${validUrlConverter(subcategory.name)}-${subcategory._id}`;
     navigate(url);
-    // console.log(url);
+    // console.log(url); //go to pages/productListPage
   };
   return (
     <div className="">

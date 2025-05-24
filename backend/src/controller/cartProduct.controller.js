@@ -20,8 +20,7 @@ const createAddToCartItem = async (req, res) => {
         });
         const save = await cartItem.save();
 
-        const updateCartUser = await User.updateOne(
-            { _id: userId },
+        const updateCartUser = await User.updateOne({ _id: userId },
             {
                 $push: {
                     shoppingCart: productId,
@@ -45,9 +44,7 @@ const createAddToCartItem = async (req, res) => {
 const getCartItem = async (req, res) => {
     try {
         const userId = req.user;
-        const cartItem = await CartProduct.find({
-            userId: userId,
-        }).populate("productId");
+        const cartItem = await CartProduct.find({userId: userId,}).populate("productId");
 
         return res.status(200).json({
             data: cartItem,
@@ -83,7 +80,7 @@ const updateCartItemQty = async (req, res) => {
             }
         );
         return res.status(200).json({
-            message: "Item Added successfully",
+            message: "Item update successfully",
             error: false,
             success: true,
             data: updateCartItem,

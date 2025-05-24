@@ -176,8 +176,7 @@ const login = async (req, res) => {
 
 const logout = async (req, res) => {
     try {
-        await User.findByIdAndUpdate(
-            req.user._id,
+        await User.findByIdAndUpdate(req.user._id,
             {
                 $unset: {
                     refreshToken: 1,
@@ -236,16 +235,13 @@ const updateUserAvatar = async (req, res) => {
             await deleteOnCloudinary(deleteAvatar);
         }
     }
-    const user = await User.findByIdAndUpdate(
-        req.user._id,
+    const user = await User.findByIdAndUpdate(req.user._id,
         {
             $set: {
                 avatar: avatar.url,
             },
         },
-        {
-            new: true,
-        }
+        { new: true}
     );
     return res.status(200).json({
         message: "image upload successfully",
@@ -259,8 +255,7 @@ const updateProfile = async (req, res) => {
     try {
         const user = req.user;
         const { name, email, mobile } = req.body;
-        const updateUser = await User.findByIdAndUpdate(
-            user._id,
+        const updateUser = await User.findByIdAndUpdate(user._id,
             {
                 $set: {
                     name,
@@ -345,17 +340,14 @@ const forgotPassword = async (req, res) => {
 
         const otp = generateOTP();
         const expireTime = new Date(Date.now() + 60 * 60 * 1000); //1hr
-        const update = await User.findByIdAndUpdate(
-            user._id,
+        const update = await User.findByIdAndUpdate(user._id,
             {
                 $set: {
                     forgetPasswordOtp: otp,
                     forgetPasswordExpiry: new Date(expireTime).toLocaleString(),
                 },
             },
-            {
-                new: true,
-            }
+            { new: true }
         );
         await sendEmail({
             sendTo: email,
@@ -404,6 +396,10 @@ const verifyForgotPasswordOtp = async (req, res) => {
         const currentTime = new Date().toLocaleString();
 
         if (user.forgetPasswordExpiry < currentTime) {
+            const updateUser = await User.findByIdAndUpdate(user?._id, {
+                forgetPasswordOtp: "",
+                forgetPasswordExpiry: "",
+            });
             return res.status(400).json({
                 message: "OTP has been expired",
                 error: true,
@@ -427,7 +423,7 @@ const verifyForgotPasswordOtp = async (req, res) => {
             forgetPasswordExpiry: "",
         });
 
-        return res.json({
+        return res.status(200).json({
             message: "OTP verify successfully",
             error: false,
             success: true,
@@ -476,7 +472,7 @@ const resetpassword = async (req, res) => {
             password: hashPassword,
         });
 
-        return res.json({
+        return res.status(200).json({
             message: "Password updated successfully.",
             error: false,
             success: true,

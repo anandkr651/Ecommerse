@@ -9,8 +9,7 @@ const generateAccessToken = async (userId) => {
             expiresIn: process.env.ACCESS_TOKEN_EXPIRY,
         }
     );
-    const updateAccessToken = await User.updateOne(
-        { _id: userId },
+    const updateAccessToken = await User.updateOne({ _id: userId },
         { accessToken: token }
     );
     return token;

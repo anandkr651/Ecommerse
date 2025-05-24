@@ -8,7 +8,7 @@ import Loading from "../components/Loading";
 import { useSelector } from "react-redux";
 import { FaMinus, FaPlus } from "react-icons/fa6";
 
-function AddToCartButton({ data }) {
+function AddToCartButton({ data }) { // props com from component/CardProduct
   const [loading, setLoading] = useState(false);
   const { fetchCartItem, updateCartQty, deleteCartItemQty } = useGlobalContext();
   const cartItem = useSelector((state) => state.cartItem.cart);

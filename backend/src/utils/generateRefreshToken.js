@@ -9,8 +9,7 @@ const generateRefreshToken = async (userId) => {
             expiresIn: process.env.REFRESH_TOKEN_EXPIRY,
         }
     );
-    const updateRefreshToken = await User.updateOne(
-        { _id: userId },
+    const updateRefreshToken = await User.updateOne({ _id: userId },
         { refreshToken: token }
     );
     return token;
