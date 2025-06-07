@@ -1,5 +1,3 @@
-export const baseURL = "http://localhost:8000";
-
 const SummaryApi = {
   register: {
     url: "/api/v1/users/register",
