@@ -50,7 +50,7 @@ const GlobalProvider = ({ children }) => {
         return responseData;
       }
     } catch (error) {
-      AxiosToastError(error);
+      // AxiosToastError(error);
     }
   };
   const deleteCartItemQty = async (cartId) => {
@@ -67,7 +67,7 @@ const GlobalProvider = ({ children }) => {
         fetchCartItem();
       }
     } catch (error) {
-      AxiosToastError(error);
+      // AxiosToastError(error);
     }
   };
 
@@ -82,7 +82,7 @@ const GlobalProvider = ({ children }) => {
         dispatch(handleAddAddress(responseData.data))
       }
     } catch (error) {
-      AxiosToastError(error)
+      // AxiosToastError(error)
       
     }
   }

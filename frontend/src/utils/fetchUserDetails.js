@@ -9,7 +9,7 @@ const fetchUserDetails = async () => {
     });
     return response;
   } catch (error) {
-    AxiosToastError(error);
+    // AxiosToastError(error);
   }
 };
 export default fetchUserDetails;

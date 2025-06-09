@@ -97,7 +97,7 @@ function Resetpassword() {
             <div className="bg-blue-50 p-2 border rounded flex items-center focus-within:border-primary-200">
               <input
                 type={showPassword ? "text" : "password"}
-                id="password"
+                id="newPassword"
                 className="w-full outline-none bg-blue-50"
                 name="newPassword"
                 value={data.newPassword}
@@ -115,7 +115,7 @@ function Resetpassword() {
             <div className="bg-blue-50 p-2 border rounded flex items-center focus-within:border-primary-200">
               <input
                 type={showConfirmPassword ? "text" : "password"}
-                id="password"
+                id="confirmPassword"
                 className="w-full outline-none bg-blue-50"
                 name="confirmPassword"
                 value={data.confirmPassword}
